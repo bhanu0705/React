@@ -3,6 +3,7 @@ import { React, useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Registration from "./Registration";
 import Login from "./Login";
+import Thankyou from "./Thankyou";
 function App() {
 
     return (
@@ -18,6 +19,10 @@ function App() {
                     <Route
                         path="/"
                         element={<Login />} />
+                    <Route
+                        path="/thankyou"
+                        element={<Thankyou />} />
+                    
         </Routes>
         
         </div>
