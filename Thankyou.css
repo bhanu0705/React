@@ -1,0 +1,22 @@
+ body {
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            align-items: center; 
+            justify-content: center;
+            background-color: #fff4f4;
+        }
+
+        .thank-you {
+            font-size: 2em;
+            padding: 20px 30px;
+            background-color: rgb(255, 251, 246);
+            border-radius: 20px;
+        }
+
+        @media (max-width: 600px) {
+            .thank-you {
+                font-size: 2em;
+                padding: 15px 30px;
+            }
+        }

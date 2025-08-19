@@ -1,0 +1,151 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  height: 100vh;
+  background-color: #2b5876; /* Dark blue gradient alternative */
+  background-image: linear-gradient(to right, #4e4376, #2b5876);
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.signup-box {
+  background-color: white;
+  padding: 30px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 350px;
+  text-align: center;
+  box-sizing:border-box;
+}
+
+.signup-box h2 {
+  margin-bottom: 10px;
+  font-size: 28px;
+}
+
+.signup-box p {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #555;
+}
+
+.input-group {
+  margin-bottom: 15px;
+  text-align: left;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 5px;
+  color: #555;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #999;
+  border-radius: 5px;
+  font-size: 14px;
+}
+
+button{
+  width: 100%;
+  padding: 12px;
+  background-color: lightgreen;
+  border: none;
+  color: white;
+  font-size: 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #4CAF50;
+}
+
+.terms {
+  font-size: 12px;
+  margin-top: 15px;
+  color: #444;
+}
+
+.terms a {
+  color: #0047ab;
+  text-decoration: none;
+}
+
+.login-link {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #333;
+}
+
+.login-link a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+
+/* body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f0f0;
+  margin: 0;
+  padding: 0;
+} */
+
+.login-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 250px;
+  text-align: center;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.login-box h1 {
+  margin-bottom: 15px;
+}
+
+.login-box label {
+  display: block;
+  text-align: left;
+}
+
+.login-box input {
+  width: 95%;
+  padding: 5px;
+  margin: 10px 0;
+  border: 1px solid #999999;
+  border-radius: 5px;
+}
+
+.login-box button {
+  background-color: lightgreen;
+  color: white;
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.login-box button:hover {
+  background-color: green;
+}
+
+.login-box p {
+  font-size: 14px;
+}
