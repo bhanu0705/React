@@ -1,11 +1,12 @@
 import "./App.css";
-import { React, useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import Registration from "./Registration";
 import Login from "./Login";
 import Thankyou from "./Thankyou";
-function App() {
 
+function App() {
+    const [loggedIn, setLoggedIn]=useState(false);
     return (
         <Router>
         <div className="App">
@@ -15,13 +16,10 @@ function App() {
                         element={<Registration />} />
                     <Route
                         path="/login"
-                        element={<Login />} />
+                        element={<Login setLoggedIn={setLoggedIn}/>} />
                     <Route
                         path="/"
-                        element={<Login />} />
-                    <Route
-                        path="/thankyou"
-                        element={<Thankyou />} />
+                        element={loggedIn?<Thankyou setLoggedIn={setLoggedIn} />:<Navigate to="/login"/>} />
                     
         </Routes>
         

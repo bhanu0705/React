@@ -1,6 +1,7 @@
 import "./Style.css";
-import { React, useState } from "react";
+import { useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
+import { Snackbar } from "@mui/material";
 
 function Registration() {
 
@@ -9,10 +10,16 @@ function Registration() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+
+    const [snackbarOpen,setSnackbarOpen]=useState(false);
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        if(password!==confirmPassword){
+            setSnackbarOpen(true);
+            return;
+        }
         console.log(
             firstName,
             lastName,
@@ -20,7 +27,7 @@ function Registration() {
             password,
             confirmPassword
         );
-        navigate("/thankyou");
+        navigate("/");
     };
 
     return (
@@ -29,7 +36,7 @@ function Registration() {
             <h2>Sign Up</h2>
             <p>It's free and only takes a minute</p>
 
-            <form>
+            <form onSubmit={handleSubmit}>
                 <div className="input-group">
                     <label>First Name</label>
                     <input type="text" id="first-name" value={firstName} onChange={(e) =>
@@ -50,29 +57,33 @@ function Registration() {
                 </div>
                 <div className="input-group">
                     <label>Password</label>
-                    <input type="password" id="password" value={password} onChange={(e) =>
-                            setPassword(e.target.value)
-                        } required />
+                    <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
                 <div className="input-group">
                     <label>Confirm Password</label>
-                    <input type="password" id="confirm-password" value={confirmPassword} onChange={(e) =>
-                            setConfirmPassword(e.target.value)
-                        } required />
+                    <input type="password" id="confirm-password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
                 </div>
 
-                <button type="submit" value="Submit" onClick={(e) => handleSubmit(e)}>Submit</button>
+                <button type="submit" value="Submit">Submit</button>
 
                 <p className="terms">
                     By clicking the Sign Up button, you agree to our
-                    <a href="#">Terms and Condition</a> and
-                    <a href="#">Policy Privacy</a>
+                    <a href="#"> Terms and Condition</a> and
+                    <a href="#"> Policy Privacy</a>
                 </p>
 
                 <p className="login-link">
                     Already have an account? <Link to="/login">Login Here</Link>
                 </p>
             </form>
+
+            <Snackbar
+                open={snackbarOpen}
+                message="Passwords do not match!"
+                autoHideDuration={1500}
+                onClose={()=>setSnackbarOpen(false)}
+                anchorOrigin={{vertical:"bottom",horizontal:"left"}}>
+            </Snackbar>
         </div>
     );
 }

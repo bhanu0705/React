@@ -16,8 +16,8 @@ body {
 
 .signup-box {
   background-color: white;
-  padding: 30px;
-  border-radius: 10px;
+  padding: 20px;
+  border-radius: 15px;
   width: 100%;
   max-width: 350px;
   text-align: center;
@@ -31,7 +31,7 @@ body {
 
 .signup-box p {
   font-size: 14px;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   color: #555;
 }
 
@@ -44,24 +44,25 @@ body {
   display: block;
   margin-bottom: 5px;
   color: #555;
+
 }
 
 .input-group input {
   width: 100%;
   padding: 10px;
   border: 1px solid #999;
-  border-radius: 5px;
+  border-radius: 10px;
   font-size: 14px;
 }
 
 button{
   width: 100%;
   padding: 12px;
-  background-color: lightgreen;
+  background-color: rgb(207, 28, 28);
   border: none;
   color: white;
   font-size: 16px;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
   margin-top: 10px;
   transition: background 0.3s;
@@ -94,13 +95,6 @@ button:hover {
 }
 
 
-/* body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
-  margin: 0;
-  padding: 0;
-} */
-
 .login-box {
   position: absolute;
   top: 50%;
@@ -120,32 +114,25 @@ button:hover {
 
 .login-box label {
   display: block;
-  text-align: left;
-}
-
-.login-box input {
-  width: 95%;
-  padding: 5px;
-  margin: 10px 0;
-  border: 1px solid #999999;
-  border-radius: 5px;
+  margin-top: 7px;
 }
 
 .login-box button {
-  background-color: lightgreen;
-  color: white;
+  background-color: rgb(207, 28, 28);
   width: 100%;
+  margin-bottom: 5px;
   padding: 10px;
   border: none;
-  border-radius: 5px;
+  border-radius: 50px;
   cursor: pointer;
   font-size: 16px;
 }
 
 .login-box button:hover {
-  background-color: green;
+  background-color:#4CAF50;
 }
 
 .login-box p {
   font-size: 14px;
+  margin-top: 5px;
 }
