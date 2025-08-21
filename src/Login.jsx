@@ -1,21 +1,18 @@
 import "./Style.css";
 import { useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
-function Login({setLoggedIn}) {
+const Login = ({onLogin}) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
     const handleSubmit = (e) => {
-        localStorage.setItem("isLoggedIn","true");
-        setLoggedIn(true);
         e.preventDefault();
+        onLogin();
         console.log(
             email,
             password
         );
-        navigate("/");
     };
 
     return (

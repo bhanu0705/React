@@ -1,9 +1,9 @@
 import "./Style.css";
 import { useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import { Snackbar } from "@mui/material";
 
-function Registration() {
+function Registration({onLogin}) {
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -12,14 +12,13 @@ function Registration() {
     const [confirmPassword, setConfirmPassword] = useState("");
 
     const [snackbarOpen,setSnackbarOpen]=useState(false);
-    const navigate = useNavigate();
-
     const handleSubmit = (e) => {
         e.preventDefault();
         if(password!==confirmPassword){
             setSnackbarOpen(true);
             return;
         }
+        onLogin();
         console.log(
             firstName,
             lastName,
@@ -27,7 +26,6 @@ function Registration() {
             password,
             confirmPassword
         );
-        navigate("/");
     };
 
     return (
