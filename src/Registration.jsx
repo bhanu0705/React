@@ -62,7 +62,7 @@ function Registration({onLogin}) {
                     <input type="password" id="confirm-password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
                 </div>
 
-                <button type="submit" value="Submit">Submit</button>
+                <button type="submit" value="Submit">Sign Up</button>
 
                 <p className="terms">
                     By clicking the Sign Up button, you agree to our

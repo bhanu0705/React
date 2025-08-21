@@ -34,7 +34,7 @@ const Login = ({onLogin}) => {
                         } required />
                 </div>
 
-                <button type="submit" value="Submit">Submit</button>
+                <button type="submit" value="Submit">Login</button>
 
                 <p>Don't have an account? <br/><Link to="/signup">Sign Up Here</Link></p>
             </form>

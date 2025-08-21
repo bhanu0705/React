@@ -6,23 +6,23 @@ import Login from "./Login";
 import Thankyou from "./Thankyou";
 
 function App() {
-    const [loggedIn, setLoggedIn]=useState(localStorage.getItem("loggedIn")==="true");
+    const [loggedIn, setLoggedIn]=useState(localStorage.getItem("loggedIn") === "true");
     const navigate= useNavigate();
 
-    const handleLogin=()=>{
+    const handleLogin = () => {
         setLoggedIn(true);
         localStorage.setItem("loggedIn","true");
         navigate("/");
     }
-    const handleLogout=()=>{
+    const handleLogout = () => {
         setLoggedIn(false);
         localStorage.removeItem("loggedIn");
     }
-    const checkLoginStatus=()=>{
+    const checkLoginStatus = () => {
         setLoggedIn(localStorage.getItem("loggedIn")==="true");
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         checkLoginStatus();
     },[]);
 
