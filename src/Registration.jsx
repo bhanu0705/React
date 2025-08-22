@@ -36,29 +36,29 @@ function Registration({onLogin}) {
 
             <form onSubmit={handleSubmit}>
                 <div className="input-group">
-                    <label>First Name</label>
+                    <label htmlFor="first-name">First Name</label>
                     <input type="text" id="first-name" value={firstName} onChange={(e) =>
                         setFirstName(e.target.value)
                     } required />
                 </div>
                 <div className="input-group">
-                    <label>Last Name</label>
+                    <label htmlFor="last-name">Last Name</label>
                     <input type="text" id="last-name" value={lastName} onChange={(e) =>
                         setLastName(e.target.value)
                     } required />
                 </div>
                 <div className="input-group">
-                    <label>Email</label>
+                    <label htmlFor="email">Email</label>
                     <input type="email" id="email" value={email} onChange={(e) =>
                         setEmail(e.target.value)
                     } required />
                 </div>
                 <div className="input-group">
-                    <label>Password</label>
+                    <label htmlFor="password">Password</label>
                     <input type="password" id="password" value={password} onChange={(e) => setPassword(e.target.value)} required />
                 </div>
                 <div className="input-group">
-                    <label>Confirm Password</label>
+                    <label htmlFor="confirm-password">Confirm Password</label>
                     <input type="password" id="confirm-password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} required />
                 </div>
 
