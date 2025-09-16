@@ -1,18 +1,34 @@
 import "./Style.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { Snackbar } from "@mui/material";
 
 const Login = ({onLogin}) => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const handleSubmit = (e) => {
+    const [snackbarOpen,setSnackbarOpen]=useState(false);
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        onLogin();
-        console.log(
-            email,
-            password
-        );
+        try{
+            const response = await axios.post("http://localhost:8080/login",{email:email,password:password}).then(res => {
+                console.log(res.data);
+                if(res.data === "Login successful"){
+                  onLogin();
+                }
+              })
+        }catch(error){
+            if(error.response && error.response.status === 401){
+                setSnackbarOpen(true);
+                return;
+            }else{
+               console.error("Unexpected error: ",error);
+            }
+        }
+       
+
     };
 
     return (
@@ -39,6 +55,14 @@ const Login = ({onLogin}) => {
                 <p>Don't have an account? <br/><Link to="/signup">Sign Up Here</Link></p>
             </form>
             
+            <Snackbar
+                open={snackbarOpen}
+                message="Invalid Email or Password"
+                autoHideDuration={1500}
+                onClose={()=>setSnackbarOpen(false)}
+                anchorOrigin={{vertical:"bottom",horizontal:"left"}}>
+            </Snackbar>
+
         </div>
     );
 }

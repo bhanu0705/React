@@ -2,7 +2,7 @@ import "./Style.css";
 import { useState } from "react";
 import { Link} from "react-router-dom";
 import { Snackbar } from "@mui/material";
-
+import axios from "axios";
 function Registration({onLogin}) {
 
     const [firstName, setFirstName] = useState("");
@@ -12,7 +12,8 @@ function Registration({onLogin}) {
     const [confirmPassword, setConfirmPassword] = useState("");
 
     const [snackbarOpen,setSnackbarOpen]=useState(false);
-    const handleSubmit = (e) => {
+    
+    const handleSubmit = async (e) => {
         e.preventDefault();
         if(password!==confirmPassword){
             setSnackbarOpen(true);
@@ -23,9 +24,12 @@ function Registration({onLogin}) {
             firstName,
             lastName,
             email,
-            password,
-            confirmPassword
+            password
         );
+        const response = await axios.post("http://localhost:8080/register",{firstName:firstName,lastName:lastName,email:email,password:password}).then(res => {
+          console.log(res.data);
+        })
+    
     };
 
     return (

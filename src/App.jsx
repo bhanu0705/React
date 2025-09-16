@@ -4,7 +4,7 @@ import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import Registration from "./Registration";
 import Login from "./Login";
 import Thankyou from "./Thankyou";
-
+import axios from "axios";
 function App() {
     const [loggedIn, setLoggedIn]=useState(localStorage.getItem("loggedIn") === "true");
     const navigate= useNavigate();
@@ -24,6 +24,9 @@ function App() {
 
     useEffect(() => {
         checkLoginStatus();
+        axios.get("http://localhost:8080/")
+        .then(res => console.log(res.data))
+        .catch(err => console.error(err));
     },[]);
 
     return (
