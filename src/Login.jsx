@@ -9,6 +9,8 @@ const Login = ({onLogin}) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [snackbarOpen,setSnackbarOpen]=useState(false);
+    const [snackMessage, setSnackMessage]=useState();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -21,6 +23,7 @@ const Login = ({onLogin}) => {
               })
         }catch(error){
             if(error.response && error.response.status === 401){
+                setSnackMessage("Invalid Email or Password");
                 setSnackbarOpen(true);
                 return;
             }else{
@@ -57,7 +60,7 @@ const Login = ({onLogin}) => {
             
             <Snackbar
                 open={snackbarOpen}
-                message="Invalid Email or Password"
+                message={snackMessage}
                 autoHideDuration={1500}
                 onClose={()=>setSnackbarOpen(false)}
                 anchorOrigin={{vertical:"bottom",horizontal:"left"}}>

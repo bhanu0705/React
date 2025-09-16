@@ -12,24 +12,33 @@ function Registration({onLogin}) {
     const [confirmPassword, setConfirmPassword] = useState("");
 
     const [snackbarOpen,setSnackbarOpen]=useState(false);
-    
+    const [snackMessage, setSnackMessage]=useState();
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if(password!==confirmPassword){
+            setSnackMessage("Passwords do not match!");
             setSnackbarOpen(true);
             return;
         }
-        onLogin();
-        console.log(
-            firstName,
-            lastName,
-            email,
-            password
-        );
-        const response = await axios.post("http://localhost:8080/register",{firstName:firstName,lastName:lastName,email:email,password:password}).then(res => {
-          console.log(res.data);
-        })
+        try{
+            const response = await axios.post("http://localhost:8080/register",{firstName:firstName,lastName:lastName,email:email,password:password}).then(res => {
+                console.log(res.data);
+                if(res.data === "Registration successful"){
+                onLogin();    
+                }
+              })
+        }catch(error){
+            if(error.response && error.response.status === 409){
+                setSnackMessage("Email already Exists");
+                setSnackbarOpen(true);
+                return;
+            }else{
+               console.error("Unexpected error: ",error);
+            }
+        }
     
+       
     };
 
     return (
@@ -81,7 +90,7 @@ function Registration({onLogin}) {
 
             <Snackbar
                 open={snackbarOpen}
-                message="Passwords do not match!"
+                message={snackMessage}
                 autoHideDuration={1500}
                 onClose={()=>setSnackbarOpen(false)}
                 anchorOrigin={{vertical:"bottom",horizontal:"left"}}>
