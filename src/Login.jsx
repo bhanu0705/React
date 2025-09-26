@@ -18,14 +18,14 @@ const Login = () => {
     e.preventDefault();
  
     try {
-      const res = await axios.post("http://localhost:8080/login", {
+      const res = await axios.post("/login", {
         email,
         password,
       });
  
-      if (res.data.token) {
+      if (res.data.employee) {
         // save globally using context
-        login(res.data.token, res.data.employee);
+        login(res.data.employee);
         navigate("/"); // redirect home
       } else {
         setSnackMessage("Unexpected response from server");

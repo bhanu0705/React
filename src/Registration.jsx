@@ -28,7 +28,7 @@ function Registration() {
     }
  
     try {
-      const res = await axios.post("http://localhost:8080/register", {
+      const res = await axios.post("/register", {
         firstName,
         lastName,
         email,
@@ -37,9 +37,9 @@ function Registration() {
  
       console.log(res.data);
  
-      if (res.data.token && res.data.employee) {
+      if (res.data.employee) {
         // Automatically login the new user
-        login(res.data.token, res.data.employee);
+        login(res.data.employee);
         navigate("/"); // redirect home
       } else {
         setSnackMessage("Registration successful! Please log in.");

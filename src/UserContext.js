@@ -1,57 +1,47 @@
-// src/context/UserContext.js
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
- 
+
+// Configure axios for cookies and HTTPS
+axios.defaults.withCredentials = true;
+axios.defaults.baseURL = "http://localhost:8082";
+
 export const UserContext = createContext();
- 
+
 export const UserProvider = ({ children }) => {
-  const [user, setUser] = useState(() => {
-    const savedUser = localStorage.getItem("user");
-    return savedUser ? JSON.parse(savedUser) : null;
-  });
-  const [token, setToken] = useState(localStorage.getItem("token") || null);
- 
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
-    if (token) {
-      axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
- 
-      if (!user) {
-        axios
-          .get("http://localhost:8080/me")
-          .then((res) => {
-            setUser(res.data);
-            localStorage.setItem("user", JSON.stringify(res.data));
-          })
-          .catch(() => {
-            setUser(null);
-            setToken(null);
-            localStorage.removeItem("token");
-            localStorage.removeItem("user");
-          });
-      }
-    }
-  }, [token]);
- 
-  const login = (newToken, userData) => {
-    setToken(newToken);
+    // On app load, always validate session by calling /me (validates cookie)
+    axios
+      .get("/me")
+      .then((res) => {
+        setUser(res.data);
+        localStorage.setItem("user", JSON.stringify(res.data));
+      })
+      .catch(() => {
+        setUser(null);
+        localStorage.removeItem("user");
+      });
+  }, []);
+
+  const login = (userData) => {
     setUser(userData);
-    localStorage.setItem("token", newToken);
     localStorage.setItem("user", JSON.stringify(userData));
-    axios.defaults.headers.common["Authorization"] = `Bearer ${newToken}`;
   };
- 
-  const logout = () => {
-    setToken(null);
+
+  const logout = async () => {
+    try {
+      await axios.post("/logout");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
     setUser(null);
-    localStorage.removeItem("token");
     localStorage.removeItem("user");
-    delete axios.defaults.headers.common["Authorization"];
   };
- 
+
   return (
-    <UserContext.Provider value={{ user, token, login, logout }}>
+    <UserContext.Provider value={{ user, login, logout }}>
       {children}
     </UserContext.Provider>
   );
 };
- 
