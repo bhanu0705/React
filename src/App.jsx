@@ -40,8 +40,7 @@ function App() {
                 element={loggedIn?<Navigate to="/" />:<Login onLogin={handleLogin} />} />
             <Route
                 path="/*"
-                element={loggedIn?<Thankyou handleLogout={handleLogout} />:<Navigate to="/login"/>} />
-                    
+                element={loggedIn?<Thankyou handleLogout={handleLogout} />:<Navigate to="/login"/>} />        
         </Routes>
         
         </div>

@@ -1,11 +1,13 @@
 import "./Style.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { Snackbar } from "@mui/material";
+import {UserContext} from "./UserContext";
 
 const Login = ({onLogin}) => {
 
+    const { setUser, setToken } = useContext(UserContext);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [snackbarOpen,setSnackbarOpen]=useState(false);
@@ -17,7 +19,7 @@ const Login = ({onLogin}) => {
         try{
             const response = await axios.post("http://localhost:8080/login",{email:email,password:password}).then(res => {
                 console.log(res.data);
-                if(res.data === "Login successful"){
+                if(res.data.message === "Login successful"){
                   onLogin();
                 }
               })
