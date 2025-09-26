@@ -1,18 +1,23 @@
-import { Link } from "react-router-dom";
+import React from "react";
+import { UserContext } from "./UserContext";
+import { useContext } from "react";
 import "./Thankyou.css";
-import { React, useState } from "react";
-
-function Thankyou({handleLogout}) {
-    
-    const [name,setName]=useState("Bhanu");
-    return (
-        <>
-        <Link to="/login"><button id="sign-out" onClick={handleLogout}>Signout</button></Link>
-        <div className="thank-you">
-            Welcome {name}
-        </div>
-        </>
-    );
+ 
+function Thankyou() {
+  const { user, logout } = useContext(UserContext);
+ 
+  return (
+    <div className="thank-you-container">
+      <button id="sign-out" onClick={logout}>
+        Sign Out
+      </button>
+ 
+      <div className="thank-you">
+        {user ? `Welcome ${user.firstName} ${user.lastName}` : "Welcome!"}
+      </div>
+    </div>
+  );
 }
-
+ 
 export default Thankyou;
+ 
