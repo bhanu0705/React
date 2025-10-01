@@ -5,31 +5,51 @@ import Login from "./Login";
 import Thankyou from "./Thankyou";
 import { useContext } from "react";
 import { UserContext } from "./UserContext";
- 
+
 function App() {
   const { user } = useContext(UserContext);
- 
+
+  // Protected Route component for authenticated users
+  const ProtectedRoute = ({ children }) => {
+    return user ? children : <Navigate to="/login" />;
+  };
+
+  // Public Route component for unauthenticated users
+  const PublicRoute = ({ children }) => {
+    return !user ? children : <Navigate to="/" />;
+  };
+
   return (
     <div className="App">
       <Routes>
         <Route
           path="/signup"
-          element={!user ? <Registration /> : <Navigate to="/" />}
+          element={
+            <PublicRoute>
+              <Registration />
+            </PublicRoute>
+          }
         />
- 
         <Route
           path="/login"
-          element={!user ? <Login /> : <Navigate to="/" />}
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
         />
- 
         <Route
           path="/"
-          element={user ? <Thankyou /> : <Navigate to="/login" />}
+          element={
+            <ProtectedRoute>
+              <Thankyou />
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </div>
   );
 }
- 
+
 export default App;
  

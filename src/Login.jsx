@@ -2,42 +2,53 @@ import "./Style.css";
 import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { Snackbar } from "@mui/material";
-import {UserContext} from "./UserContext";
+import { Snackbar, CircularProgress } from "@mui/material";
+import { UserContext } from "./UserContext";
 
 const Login = () => {
   const { login } = useContext(UserContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
- 
+
   const navigate = useNavigate();
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
- 
+    setLoading(true);
+
     try {
       const res = await axios.post("/login", {
         email,
         password,
       });
- 
+
       if (res.data.employee) {
-        // save globally using context
         login(res.data.employee);
-        navigate("/"); // redirect home
+        navigate("/");
       } else {
-        setSnackMessage("Unexpected response from server");
+        setSnackMessage("Login failed: Invalid response from server");
         setSnackbarOpen(true);
       }
     } catch (error) {
-      if (error.response && error.response.status === 401) {
-        setSnackMessage("Invalid Email or Password");
-      } else {
-        setSnackMessage("Unexpected error occurred");
+      let message = "An unexpected error occurred. Please try again.";
+      if (error.response) {
+        if (error.response.status === 401) {
+          message = "Invalid email or password. Please check your credentials.";
+        } else if (error.response.status === 500) {
+          message = "Server error. Please try again later.";
+        } else {
+          message = `Login failed: ${error.response.data?.message || "Unknown error"}`;
+        }
+      } else if (error.request) {
+        message = "Network error. Please check your connection.";
       }
+      setSnackMessage(message);
       setSnackbarOpen(true);
+    } finally {
+      setLoading(false);
     }
   };
  
@@ -68,7 +79,9 @@ const Login = () => {
           />
         </div>
  
-        <button type="submit">Login</button>
+        <button type="submit" disabled={loading} style={{ minHeight: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {loading ? <CircularProgress size={21} /> : "Login"}
+        </button>
  
         <p>
           Don't have an account? <br />

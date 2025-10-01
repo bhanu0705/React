@@ -1,32 +1,34 @@
 import "./Style.css";
 import { useState, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Snackbar } from "@mui/material";
+import { Snackbar, CircularProgress } from "@mui/material";
 import axios from "axios";
 import { UserContext } from "./UserContext";
- 
+
 function Registration() {
-  const { login } = useContext(UserContext); // use login from context
+  const { login } = useContext(UserContext);
   const navigate = useNavigate();
- 
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
- 
+  const [loading, setLoading] = useState(false);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [snackMessage, setSnackMessage] = useState("");
- 
+
   const handleSubmit = async (e) => {
     e.preventDefault();
- 
+
     if (password !== confirmPassword) {
       setSnackMessage("Passwords do not match!");
       setSnackbarOpen(true);
       return;
     }
- 
+
+    setLoading(true);
+
     try {
       const res = await axios.post("/register", {
         firstName,
@@ -34,25 +36,33 @@ function Registration() {
         email,
         password,
       });
- 
-      console.log(res.data);
- 
+
       if (res.data.employee) {
-        // Automatically login the new user
         login(res.data.employee);
-        navigate("/"); // redirect home
+        navigate("/");
       } else {
         setSnackMessage("Registration successful! Please log in.");
         setSnackbarOpen(true);
       }
     } catch (error) {
-      if (error.response && error.response.status === 409) {
-        setSnackMessage("Email already exists");
-      } else {
-        setSnackMessage("Unexpected error occurred");
-        console.error("Registration error:", error);
+      let message = "An unexpected error occurred. Please try again.";
+      if (error.response) {
+        if (error.response.status === 409) {
+          message = "An account with this email already exists.";
+        } else if (error.response.status === 400) {
+          message = "Invalid input. Please check your details.";
+        } else if (error.response.status === 500) {
+          message = "Server error. Please try again later.";
+        } else {
+          message = `Registration failed: ${error.response.data?.message || "Unknown error"}`;
+        }
+      } else if (error.request) {
+        message = "Network error. Please check your connection.";
       }
+      setSnackMessage(message);
       setSnackbarOpen(true);
+    } finally {
+      setLoading(false);
     }
   };
  
@@ -117,7 +127,9 @@ function Registration() {
           />
         </div>
  
-        <button type="submit">Sign Up</button>
+        <button type="submit" disabled={loading} style={{ minHeight: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+          {loading ? <CircularProgress size={21} /> : "Sign Up"}
+        </button>
  
         <p className="terms">
           <a href="#">Terms and Conditions</a> and By clicking Sign Up, you
